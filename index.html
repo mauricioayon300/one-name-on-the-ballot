@@ -14,16 +14,16 @@
   --bg:#ffffff; --surface:#f7f8fa; --ink:#111111; --muted:#565d6b; --line:#dcdfe6; --band:#20365f; --band-ink:#ffffff; --accent:#c8102e; --logo-bg:transparent; --logo-pad:0;
   --one:#c8102e;      /* red: one name on the ballot */
   --nf:#ef9a9a;       /* light red: nobody filed in filing week */
-  --two:#1d6fb8;      /* blue: voters had a choice */
+  --two:#12905f;      /* green: voters had a choice */
   --display:"Helvetica Neue",Helvetica,Arial,sans-serif;
   --body:"Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
   --bg:#0d1626; --surface:#152033; --ink:#f1f3f7; --muted:#a3adbd; --line:#2a3850; --band:#20365f; --band-ink:#ffffff; --accent:#f0606f; --logo-bg:#f0f9fb; --logo-pad:6px 14px 6px 6px;
-  --one:#f0606f; --nf:#f6b9b9; --two:#5aa4e0; color-scheme:dark } }
+  --one:#f0606f; --nf:#f6b9b9; --two:#4cc38f; color-scheme:dark } }
 :root[data-theme="dark"]{
   --bg:#0d1626; --surface:#152033; --ink:#f1f3f7; --muted:#a3adbd; --line:#2a3850; --band:#20365f; --band-ink:#ffffff; --accent:#f0606f; --logo-bg:#f0f9fb; --logo-pad:6px 14px 6px 6px;
-  --one:#f0606f; --nf:#f6b9b9; --two:#5aa4e0; color-scheme:dark }
+  --one:#f0606f; --nf:#f6b9b9; --two:#4cc38f; color-scheme:dark }
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55}
 .wrap{max-width:880px;margin:0 auto;padding-block:40px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:56px}
 section{display:flex;flex-direction:column;gap:16px;min-width:0}
@@ -115,7 +115,7 @@ ol{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px;max-w
   <h2>Where the choice disappears</h2>
   <p>The smaller the district, the less likely anyone runs against the person already in the seat. These boards set fire and ambulance service, hospital budgets, water rates and school policy.</p>
   <div class="rows" id="rows"></div>
-  <p class="small muted">Red is the share of seats with one name on the ballot. Light red is the share where nobody filed in filing week and the seat was filled in the second window. Blue is the share where voters had a choice. All three election years combined.</p>
+  <p class="small muted">Red is the share of seats with one name on the ballot. Light red is the share where nobody filed in filing week and the seat was filled in the second window. Green is the share where voters had a choice. All three election years combined.</p>
 </section>
 
 <section>
