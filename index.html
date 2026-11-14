@@ -11,19 +11,19 @@
 /* Layout: one reading column; the ballot-oval grid is the single loud element, everything else stays quiet. */
 :root{
   /* PCVU logo palette: navy #135a88, sky #4ca2d9, pale #98cfed, mist #f0f9fb */
-  --bg:#ffffff; --surface:#f7f8fa; --ink:#111111; --muted:#565d6b; --line:#dcdfe6; --band:#20365f; --band-ink:#ffffff; --accent:#c8102e; --logo-bg:transparent; --logo-pad:0;
-  --one:#c8102e;      /* red: one name on the ballot */
-  --nf:#ef9a9a;       /* light red: nobody filed in filing week */
-  --two:#12905f;      /* green: voters had a choice */
+  --bg:#ffffff; --surface:#f7f8fa; --ink:#111111; --muted:#565d6b; --line:#dcdfe6; --band:#20365f; --band-ink:#ffffff; --accent:#C24E00; --logo-bg:transparent; --logo-pad:0;
+  --one:#D55E00;      /* orange-red: one name on the ballot */
+  --nf:#F0E442; --nf-line:#333333;   /* yellow with dark outline: nobody filed */
+  --two:#0072B2;      /* blue: voters had a choice */
   --display:"Helvetica Neue",Helvetica,Arial,sans-serif;
   --body:"Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
-  --bg:#0d1626; --surface:#152033; --ink:#f1f3f7; --muted:#a3adbd; --line:#2a3850; --band:#20365f; --band-ink:#ffffff; --accent:#f0606f; --logo-bg:#f0f9fb; --logo-pad:6px 14px 6px 6px;
-  --one:#f0606f; --nf:#f6b9b9; --two:#4cc38f; color-scheme:dark } }
+  --bg:#0d1626; --surface:#152033; --ink:#f1f3f7; --muted:#a3adbd; --line:#2a3850; --band:#20365f; --band-ink:#ffffff; --accent:#F0884A; --logo-bg:#f0f9fb; --logo-pad:6px 14px 6px 6px;
+  --one:#EB7A2A; --nf:#F0E442; --nf-line:#F0E442; --two:#4AA3DF; color-scheme:dark } }
 :root[data-theme="dark"]{
-  --bg:#0d1626; --surface:#152033; --ink:#f1f3f7; --muted:#a3adbd; --line:#2a3850; --band:#20365f; --band-ink:#ffffff; --accent:#f0606f; --logo-bg:#f0f9fb; --logo-pad:6px 14px 6px 6px;
-  --one:#f0606f; --nf:#f6b9b9; --two:#4cc38f; color-scheme:dark }
+  --bg:#0d1626; --surface:#152033; --ink:#f1f3f7; --muted:#a3adbd; --line:#2a3850; --band:#20365f; --band-ink:#ffffff; --accent:#F0884A; --logo-bg:#f0f9fb; --logo-pad:6px 14px 6px 6px;
+  --one:#EB7A2A; --nf:#F0E442; --nf-line:#F0E442; --two:#4AA3DF; color-scheme:dark }
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55}
 .wrap{max-width:880px;margin:0 auto;padding-block:40px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:56px}
 section{display:flex;flex-direction:column;gap:16px;min-width:0}
@@ -44,7 +44,7 @@ b.n{font-variant-numeric:tabular-nums}
 /* ballot ovals */
 .o{width:22px;height:14px;border-radius:50%;border:2px solid var(--one);background:var(--one);padding:0;cursor:pointer;flex:none}
 .o.two{border-color:var(--two);background:var(--two)}
-.o.nf{background:var(--nf);border-color:var(--nf)}
+.o.nf{background:var(--nf);border-color:var(--nf-line)}
 .o,.bar,.bar i,.ask{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .o.dim{opacity:.16}
 .o:focus-visible,.chip:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
@@ -61,6 +61,8 @@ b.n{font-variant-numeric:tabular-nums}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chip{font:inherit;font-size:.88rem;font-weight:600;color:var(--ink);background:transparent;border:1.5px solid var(--line);border-radius:999px;padding:5px 13px;cursor:pointer}
 .chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.how{font-size:.95rem}
+.how:empty{display:none}
 .detail{min-height:3.1em;border-top:1px solid var(--line);padding-top:14px;font-size:.98rem}
 
 /* office-type rows */
@@ -69,7 +71,7 @@ b.n{font-variant-numeric:tabular-nums}
 .row .lab{font-weight:600}
 .bar{display:flex;height:18px;border-radius:3px;overflow:hidden;background:var(--two)}
 .bar i{display:block;background:var(--one);height:100%}
-.bar i.nf{background:var(--nf)}
+.bar i.nf{background:var(--nf);box-shadow:inset 0 0 0 2px var(--nf-line)}
 .row .val{text-align:right;font-variant-numeric:tabular-nums;font-size:.95rem}
 @media (max-width:560px){.row{grid-template-columns:1fr 96px}.row .bar{grid-column:1/-1;order:3}}
 
@@ -98,16 +100,18 @@ ol{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px;max-w
 
 <section>
   <h2>Every seat, every year</h2>
-  <p>Each oval is one elected seat, drawn like the oval you fill in on your ballot. Tap any oval to see the office.</p>
+  <p>Each oval is one elected seat, drawn like the oval you fill in on your ballot. The color shows how many people ran for it.</p>
   <div class="legend">
     <span><i class="o"></i> One name on the ballot</span>
     <span><i class="o nf"></i> Nobody filed in filing week. Filled in the second window.</span>
     <span><i class="o two"></i> Two names. Voters had a choice.</span>
   </div>
+  <p class="how"><b>See one kind of office.</b> Tap a button below, such as Fire or School. Seats of that kind stay bright and all the others fade. Tap the same button again to bring every seat back.</p>
   <div class="chips" id="chips" role="group" aria-label="Show one type of office"></div>
+  <p class="how" id="filterNote" aria-live="polite"></p>
   <div class="years">
     <div id="years"></div>
-    <div class="detail" id="detail" aria-live="polite"><span class="muted">Tap an oval to see which seat it is and how many people ran.</span></div>
+    <div class="detail" id="detail" aria-live="polite"><span class="muted" id="detailHint">Tap any oval above. This box will show the name of the office, the year, and whether one person or two people ran for it.</span></div>
   </div>
 </section>
 
@@ -115,7 +119,7 @@ ol{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px;max-w
   <h2>Where the choice disappears</h2>
   <p>The smaller the district, the less likely anyone runs against the person already in the seat. These boards set fire and ambulance service, hospital budgets, water rates and school policy.</p>
   <div class="rows" id="rows"></div>
-  <p class="small muted">Red is the share of seats with one name on the ballot. Light red is the share where nobody filed in filing week and the seat was filled in the second window. Green is the share where voters had a choice. All three election years combined.</p>
+  <p class="small muted">Orange-red is the share of seats with one name on the ballot. Yellow is the share where nobody filed in filing week and the seat was filled in the second window. Blue is the share where voters had a choice. All three election years combined.</p>
 </section>
 
 <section>
@@ -136,7 +140,7 @@ ol{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px;max-w
     <li><b>Filing week closes in May with nobody signed up.</b> This also happens when the only person who filed withdraws.</li>
     <li><b>The county auditor must open filing again for three days.</b> State law requires it. In 2025, Pacific County's second window ran May 28 to 30.</li>
     <li><b>The public hears about it through local news.</b> There is no mailing to voters. Most people never know the window opened.</li>
-    <li><b>Anyone who files in those three days goes straight to the November ballot.</b> There is no primary. These are the light red ovals above. Across the three election years, 21 seats reached the ballot this way, and 20 of them ended up with one name.</li>
+    <li><b>Anyone who files in those three days goes straight to the November ballot.</b> There is no primary. These are the yellow ovals above. Across the three election years, 21 seats reached the ballot this way, and 20 of them ended up with one name.</li>
     <li><b>If still nobody files, the race is cancelled.</b> The seat comes off the ballot, and write-in votes for it are not counted.</li>
   </ol>
   <p>Money is rarely what stops people. Of the seven seats in the 2025 second window, only one had a filing fee, and it was $36.</p>
@@ -192,7 +196,7 @@ ol{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px;max-w
 <section class="notes">
   <p><b>How this was counted.</b> Every candidate race on the Pacific County general election ballot in November 2021, 2023 and 2025, from certified results published by the Washington Secretary of State. A seat counts as having one name when a single candidate was printed on the ballot. Write-in lines are not counted as a second candidate. Ballot measures and one regional Court of Appeals seat are left out.</p>
   <p><b>Shared districts.</b> Fifty of the 190 seats belong to districts that cross into a neighboring county, such as Ocosta, North River, Pe Ell and Naselle-Grays River Valley schools. Counting only districts fully inside Pacific County, the result is 109 of 140 seats with one name, or 78 percent.</p>
-  <p><b>How the light red seats were found.</b> The Washington Secretary of State publishes every candidate who filed during the regular filing week, with the date. A seat that is on the November ballot but has no one on that list drew no candidate in filing week. For Pacific County's own districts this matches the count of offices in each year's special filing period reported in the local press. The 2025 newspaper list calls the sewer seat Seat 1, and the ballot calls it Position 3.</p>
+  <p><b>How the yellow seats were found.</b> The Washington Secretary of State publishes every candidate who filed during the regular filing week, with the date. A seat that is on the November ballot but has no one on that list drew no candidate in filing week. For Pacific County's own districts this matches the count of offices in each year's special filing period reported in the local press. The 2025 newspaper list calls the sewer seat Seat 1, and the ballot calls it Position 3.</p>
   <p><b>What is not counted.</b> The 190 seats are the ones that reached the ballot. The four races described above as cancelled or missing from the ballot are not in that number. They were identified from the term lengths in the state filing list and from which positions appeared in which year, so treat them as a careful reading of the record and not an official list. Seats filled by appointment between elections are also not counted. Fourteen seats came back to the ballot two years after their last election, which usually means someone left early and a replacement was appointed.</p>
   <p><b>Sources.</b> <a href="https://results.vote.wa.gov/results/20251104/pacific/">2025 results</a>, <a href="https://results.vote.wa.gov/results/20231107/pacific/">2023 results</a>, <a href="https://results.vote.wa.gov/results/20211102/pacific/">2021 results</a> (Washington Secretary of State). Special filing periods: Chinook Observer, <a href="https://chinookobserver.com/2025/05/28/special-filing-period-begins-may-28/">May 28, 2025</a> and <a href="https://www.chinookobserver.com/news/local/special-filing-period-begins-may-31/article_bc7a45f6-ff20-11ed-b6b5-dfc4de8bfbb4.html">May 30, 2023</a>. Candidates who filed in the regular week: Washington Secretary of State candidate lists for <a href="https://voter.votewa.gov/CandidateList.aspx?c=25&e=893">2025</a>, <a href="https://voter.votewa.gov/CandidateList.aspx?e=882&c=25">2023</a> and <a href="https://voter.votewa.gov/CandidateList.aspx?e=870&c=25">2021</a>. Open positions after filing week in 2023: <a href="https://www.kxro.com/filing-week-features-many-crowded-and-many-vacant-positions/">KXRO News Radio</a>. Special filing rules: RCW 29A.24.181 and the <a href="https://www.piercecountywa.gov/DocumentCenter/View/133368/2025CandidateGuide-FINAL">Pierce County 2025 candidate guide</a>, which explains the same state rules. Cancelled races: <a href="https://lawfilesext.leg.wa.gov/law/RCW/RCW%20%2029A%20TITLE/RCW%20%2029A.%2024%20%20CHAPTER/RCW%20%2029A.%2024%20.201.htm">RCW 29A.24.201</a>. Appointments: <a href="https://mrsc.org/explore-topics/governance/officials/vacancies">MRSC, Vacancies in Local Elected Offices</a>. This page describes the general rules and is not legal advice.</p>
 </section>
@@ -223,12 +227,17 @@ function describe(s){
 yearsEl.style.cssText="display:flex;flex-direction:column;gap:22px";
 function setGroup(g){active=(active===g)?null:g;
   document.querySelectorAll(".dots .o").forEach(o=>o.classList.toggle("dim",active!==null&&o.dataset.g!==active));
-  chips.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed",String(c.dataset.g===active)));}
+  chips.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed",String(c.dataset.g===active)));
+  const note=document.getElementById("filterNote");
+  if(active===null){note.textContent="Showing all "+SEATS.length+" seats.";}
+  else{const r=SEATS.filter(s=>s.group===active),one=r.filter(s=>s.names<2).length;
+    note.textContent="Showing only "+active+" seats. There were "+r.length+" over the three election years, and "+one+" had one name on the ballot. Tap "+active+" again to show all seats.";}}
 GROUPS.forEach(g=>{const c=document.createElement("button");c.type="button";c.className="chip";c.id="chip-"+g.replace(/\s/g,"-");c.dataset.g=g;c.textContent=g;c.setAttribute("aria-pressed","false");c.addEventListener("click",()=>setGroup(g));chips.appendChild(c)});
 const rowsEl=document.getElementById("rows");
 GROUPS.map(g=>{const r=SEATS.filter(s=>s.group===g);const one=r.filter(s=>s.names<2).length;const nf=r.filter(s=>s.nofiler).length;const red=r.filter(s=>s.names<2&&!s.nofiler).length;return{g,one,nf,red,t:r.length,p:one/r.length}})
  .sort((a,b)=>b.p-a.p||b.t-a.t).forEach(x=>{const el=document.createElement("div");el.className="row";
   el.innerHTML='<div class="lab">'+x.g+'</div><div class="bar" role="img" aria-label="'+x.one+' of '+x.t+' seats had one name"><i style="width:'+(100*x.red/x.t).toFixed(1)+'%"></i><i class="nf" style="width:'+(100*x.nf/x.t).toFixed(1)+'%"></i></div><div class="val"><b>'+x.one+'</b> of '+x.t+'</div>';rowsEl.appendChild(el)});
+document.getElementById("filterNote").textContent="Showing all "+SEATS.length+" seats.";
 </script>
 </body>
 </html>
